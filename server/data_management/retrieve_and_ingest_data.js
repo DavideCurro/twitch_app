@@ -6,7 +6,7 @@ const client = require('../elasticsearch/client');
 require('log-timestamp');
 
 // Percorso locale del file CSV
-const filePath = path.join('/Users/davide/Desktop/archive/Twitch_game_data.csv');
+const filePath = path.join('percorso_csv');
 
 router.get('/twitch-games', async function (req, res) {
   console.log('Loading Application...');
@@ -19,7 +19,7 @@ router.get('/twitch-games', async function (req, res) {
       // Leggi il file CSV localmente
       const csvData = fs.readFileSync(filePath, 'utf8');
       
-      const rows = csvData.split('\n').slice(1); // Salta l'intestazione
+      const rows = csvData.split('\n').slice(1); 
 
       console.log('Indexing data...');
       rows.forEach(async (row) => {
@@ -42,7 +42,7 @@ router.get('/twitch-games', async function (req, res) {
 
           console.log(JSON.stringify(gameObject, null, 2));
 
-          // Indicizza il documento in Elasticsearch
+          
           await client.index({
             index: 'twitch_top_game',
             body: gameObject,
